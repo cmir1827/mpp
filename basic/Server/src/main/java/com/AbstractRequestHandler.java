@@ -5,13 +5,13 @@ import com.model.*;
 import com.net.NetRequest;
 import com.net.NetResponse;
 import com.net.ResponseType;
-import com.repositories.GameRepository;
-import com.repositories.IntrebareRepository;
-import com.repositories.TestHBNRepository;
+import com.repositories.MasinaHBNRepositpry;
+import com.repositories.MasinaPunctControlRepository;
+import com.repositories.PunctControlRepository;
 import com.repositories.UserRepo;
-import com.services.GamingService;
-import com.services.QuestionService;
-import com.services.TestService;
+import com.services.MasinaPunctControlService;
+import com.services.MasinaService;
+import com.services.PunctControlService;
 import com.services.UsersService;
 import com.util.JdbcUtils;
 import jdk.nashorn.internal.scripts.JD;
@@ -30,17 +30,11 @@ public abstract class AbstractRequestHandler implements Runnable{
     Gson gson = new Gson();
 
     UsersService usersService = new UsersService(new UserRepo(JdbcUtils.getProps()));
-    TestService testService = new TestService(new TestHBNRepository());
-    QuestionService questionService = new QuestionService(new IntrebareRepository(JdbcUtils.getProps()));
-    GamingService gamingService;
+    MasinaService masinaService = new MasinaService(new MasinaHBNRepositpry());
+    PunctControlService punctControlService = new PunctControlService(new PunctControlRepository(JdbcUtils.getProps()));
+    MasinaPunctControlService masinaPunctControlService = new MasinaPunctControlService(new MasinaPunctControlRepository(JdbcUtils.getProps()));
 
-    public AbstractRequestHandler() {
-        gamingService = new GamingService(new GameRepository(JdbcUtils.getProps()));
-    }
-
-    public GamingService getGamingService() {
-        return gamingService;
-    }
+    public AbstractRequestHandler() { }
 
     @Override
     public abstract void run() ;
@@ -83,75 +77,86 @@ public abstract class AbstractRequestHandler implements Runnable{
         }
     }
 
-    protected NetResponse handleNewGame(String usrJsonString){
+    protected NetResponse handleGetMasini(String usrJsonString) {
         TSUser user = gson.fromJson(usrJsonString, TSUser.class);
         System.out.println(user);
 
-        System.out.println("GAMING SERVICE: " + gamingService);
-        PendingGame pendingGame = gamingService.startNewGame(user);
-        System.out.println(pendingGame);
+        PunctControl punctControl = punctControlService.getAll().stream().filter((p) -> p.getUser().getUserId() == user.getUserId()).findFirst().get();
 
-        if(pendingGame != null){
-            //pot sa incep
-            System.out.println(pendingGame.getPlayers());
-            pendingGame.getPlayers().forEach(p->{
-                if (!p.getUsername().equals(user.getUsername()))
-                    sendCustomNotification(userMap.get(p), new NetResponse(ResponseType.NOTIFY_GAME_START, "Game can start", gson.toJson(pendingGame.getTestCultura())));
-            });
-            return new NetResponse(ResponseType.OK, "Start", gson.toJson(pendingGame.getTestCultura()));
-        }else{
-            return new NetResponse(ResponseType.OK, "You still have to wait");
+        if (punctControl.getNumarControl() == 0) {
+            //send all cars
+
+            List<Masina> masinas = masinaService.getAll();
+
+            Masina[] masinaArray = new Masina[masinas.size()];
+            masinaArray = masinas.toArray(masinaArray);
+
+            return new NetResponse(ResponseType.OK, "message", gson.toJson(masinaArray));
+        } else {
+            List<Masina> masinas = masinaPunctControlService.findAll().stream().filter((p) -> p.getPunctControl().getNumarControl() == (punctControl.getNumarControl() - 1)).map((p) -> p.getMasina()).collect(Collectors.toList());
+            Masina[] masinaArray = new Masina[masinas.size()];
+            masinaArray = masinas.toArray(masinaArray);
+
+            return new NetResponse(ResponseType.OK, "message", gson.toJson(masinaArray));
         }
     }
 
-    protected NetResponse handleGetAllQuestions(String jsonString) {
-        TestCultura testCultura = gson.fromJson(jsonString, TestCultura.class);
-
-
-        List<Intrebare> intrebareList = questionService.getAll().stream().filter(p -> p.getTestCultura().getId() == testCultura.getId()).collect(Collectors.toList());
-
-        Intrebare[] intrebareArray = new Intrebare[intrebareList.size()];
-        intrebareArray = intrebareList.toArray(intrebareArray);
-
-        return new NetResponse(ResponseType.OK, "OK", gson.toJson(intrebareArray));
-    }
-
-    private NetResponse handleGameOver(String jsonString) {
-        Game game = gson.fromJson(jsonString, Game.class);
-
-        List<Game> games = gamingService.gameOver(game);
-        if(games != null){
-
-            Game[] gameArray = new Game[games.size()];
-            gameArray = games.toArray(gameArray);
-
-
-            games.forEach(p->{
-                Game[] gameArrayLambda = new Game[games.size()];
-                gameArrayLambda = games.toArray(gameArrayLambda);
-
-                if (!p.getUser().getUsername().equals(game.getUser().getUsername()))
-                    sendCustomNotification(userMap.get(p.getUser()), new NetResponse(ResponseType.NOTIFY_GAME_OVER, "OVER", gson.toJson(gameArrayLambda)));
-            });
-
-            //Observable
-            //i need userMap
-
-
-//            PendingGame game1 = gamingService.initGameForExistingUsers();
+//    protected NetResponse handleNewGame(String usrJsonString){
 //
-//            if (game1 != null) {
-//                game1.getPlayers().forEach(user ->{
-//                    sendCustomNotification(userMap.get(user), new NetResponse(ResponseType.NOTIFY_GAME_START, "Game can start", gson.toJson(game1.getTestCultura())));
-//                });
-//            }
-
-
-            return new NetResponse(ResponseType.OK, "OVER", gson.toJson(gameArray));
-        }else{
-            return new NetResponse(ResponseType.OK, "Astept rezultate");
-        }
-    }
+//
+//        System.out.println("GAMING SERVICE: " + gamingService);
+//        PendingGame pendingGame = gamingService.startNewGame(user);
+//        System.out.println(pendingGame);
+//
+//        if(pendingGame != null){
+//            //pot sa incep
+//            System.out.println(pendingGame.getPlayers());
+//            pendingGame.getPlayers().forEach(p->{
+//                if (!p.getUsername().equals(user.getUsername()))
+//                    sendCustomNotification(userMap.get(p), new NetResponse(ResponseType.NOTIFY_GAME_START, "Game can start", gson.toJson(pendingGame.getTestCultura())));
+//            });
+//            return new NetResponse(ResponseType.OK, "Start", gson.toJson(pendingGame.getTestCultura()));
+//        }else{
+//            return new NetResponse(ResponseType.OK, "You still have to wait");
+//        }
+//    }
+//
+//    protected NetResponse handleGetAllQuestions(String jsonString) {
+//        TestCultura testCultura = gson.fromJson(jsonString, TestCultura.class);
+//
+//
+//        List<Intrebare> intrebareList = questionService.getAll().stream().filter(p -> p.getTestCultura().getId() == testCultura.getId()).collect(Collectors.toList());
+//
+//        Intrebare[] intrebareArray = new Intrebare[intrebareList.size()];
+//        intrebareArray = intrebareList.toArray(intrebareArray);
+//
+//        return new NetResponse(ResponseType.OK, "OK", gson.toJson(intrebareArray));
+//    }
+//
+//    private NetResponse handleGameOver(String jsonString) {
+//        Game game = gson.fromJson(jsonString, Game.class);
+//
+//        List<Game> games = gamingService.gameOver(game);
+//        if(games != null){
+//
+//            Game[] gameArray = new Game[games.size()];
+//            gameArray = games.toArray(gameArray);
+//
+//
+//            games.forEach(p->{
+//                Game[] gameArrayLambda = new Game[games.size()];
+//                gameArrayLambda = games.toArray(gameArrayLambda);
+//
+//                if (!p.getUser().getUsername().equals(game.getUser().getUsername()))
+//                    sendCustomNotification(userMap.get(p.getUser()), new NetResponse(ResponseType.NOTIFY_GAME_OVER, "OVER", gson.toJson(gameArrayLambda)));
+//            });
+//
+//
+//            return new NetResponse(ResponseType.OK, "OVER", gson.toJson(gameArray));
+//        }else{
+//            return new NetResponse(ResponseType.OK, "Astept rezultate");
+//        }
+//    }
 
     public NetResponse getResponseForRequest(NetRequest request, String senderId){
         if(request != null){
@@ -163,14 +168,8 @@ public abstract class AbstractRequestHandler implements Runnable{
                 case LogOut:
                     response = handleLogOut(request.getJsonString(), senderId);
                     return response;
-                case REQUEST_NEW_GAME:
-                    response = handleNewGame(request.getJsonString());
-                    return response;
-                case GetAllQuestionsForTest:
-                    response = handleGetAllQuestions(request.getJsonString());
-                    return response;
-                case REQUEST_GAME_OVER:
-                    response = handleGameOver(request.getJsonString());
+                case GetMasini:
+                    response = handleGetMasini(request.getJsonString());
                     return response;
             }
         }

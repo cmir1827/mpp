@@ -5,7 +5,5 @@ package com.net;
  */
 public enum RequestType {
     SignIn, LogOut,
-    GetAllQuestionsForTest,
-    REQUEST_NEW_GAME,
-    REQUEST_GAME_OVER
+    GetMasini,
 }

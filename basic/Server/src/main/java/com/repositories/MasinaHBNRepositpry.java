@@ -1,7 +1,6 @@
 package com.repositories;
 
 import com.model.Masina;
-import com.model.TestCultura;
 import com.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

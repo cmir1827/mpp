@@ -1,9 +1,7 @@
 package com.repositories;
 
-import com.model.Intrebare;
 import com.model.PunctControl;
 import com.model.TSUser;
-import com.model.TestCultura;
 import com.util.JdbcUtils;
 
 import java.sql.Connection;
