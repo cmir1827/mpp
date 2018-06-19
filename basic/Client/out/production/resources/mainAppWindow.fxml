@@ -15,7 +15,7 @@
       <Label fx:id="contentLabel" layoutX="625.0" layoutY="118.0" text="NUME" />
       <TextField fx:id="idField" layoutX="532.0" layoutY="77.0" prefHeight="27.0" prefWidth="224.0" />
       <TextField fx:id="contentField" layoutX="538.0" layoutY="143.0" prefHeight="27.0" prefWidth="224.0" />
-      <Button layoutX="532.0" layoutY="377.0" mnemonicParsing="false" onAction="#inregistreazaIntrebarePressedinregistreazaIntrebarePressed" prefHeight="27.0" prefWidth="224.0" text="Inregistreaza Masina" />
+      <Button layoutX="532.0" layoutY="377.0" mnemonicParsing="false" onAction="#inregistreazaIntrebarePressed" prefHeight="27.0" prefWidth="224.0" text="Inregistreaza Masina" />
       <Label fx:id="answerLabel" layoutX="604.0" layoutY="260.0" text="TIME TRECERE" />
       <TextField fx:id="answerField" layoutX="532.0" layoutY="291.0" prefHeight="27.0" prefWidth="224.0" />
       <Label layoutX="58.0" layoutY="14.0" text="LOGGED IN USER:" />
