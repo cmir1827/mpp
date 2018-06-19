@@ -4,6 +4,7 @@ import com.AbstractClientService;
 import com.MasinaTableEntry;
 import com.StartClient;
 import com.exceptions.LogOutException;
+import com.model.MasinaPunctControl;
 import com.model.TSUser;
 import com.utils.ModelTableViewBuilder;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 
 /**
@@ -162,18 +164,10 @@ public class MainAppView {
     }
 
     @FXML void inregistreazaIntrebarePressed(){
-//        if(selectedIntrebare != null && answerField.getText().length() > 0){
-//            if(selectedIntrebare.getCorrectAnswer().equals(answerField.getText())){
-//                points++;
-//            }
-//            System.out.println(points);
-//            observableList.remove(selectedIntrebare);
-//            tableView.refresh();
-//            if(observableList.size() == 0){
-//                System.out.println("game over");
-//                Game game = new Game(loggedInUser,currentTest,points);
-//                segueToResults(game);
-//            }
-//        }
+        if(selectedMasina != null && answerField.getText().length() > 0){
+            observableList.remove(selectedMasina);
+            tableView.refresh();
+            clientService.handlePassCheckpoint(new MasinaPunctControl(selectedMasina.getMasina(), selectedMasina.getPunctControl(), LocalDate.parse(answerField.getText())));
+        }
     }
 }

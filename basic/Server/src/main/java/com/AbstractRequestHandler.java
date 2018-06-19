@@ -114,6 +114,15 @@ public abstract class AbstractRequestHandler implements Runnable{
         }
     }
 
+    protected NetResponse handlePassCheckpoint(String punctControlJson) {
+        PunctControl control = gson.fromJson(punctControlJson, PunctControl.class);
+
+        punctControlService.save(control);
+
+        //Notify others
+
+        return new NetResponse(ResponseType.OK, "ok");
+    }
 //    protected NetResponse handleNewGame(String usrJsonString){
 //
 //
@@ -183,6 +192,9 @@ public abstract class AbstractRequestHandler implements Runnable{
                     return response;
                 case GetMasini:
                     response = handleGetMasini(request.getJsonString());
+                    return response;
+                case PassCheckpoint:
+                    response = handlePassCheckpoint(request.getJsonString());
                     return response;
             }
         }

@@ -23,4 +23,8 @@ public class PunctControlService {
     public List<PunctControl> getAll(){
         return repository.findAll();
     }
+
+    public void save(PunctControl punctControl) {
+        repository.save(punctControl);
+    }
 }

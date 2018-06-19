@@ -1,5 +1,9 @@
 package com;
 
+import com.model.Masina;
+import com.model.PunctControl;
+import com.util.IgnoreTable;
+
 import java.time.LocalDate;
 
 public class MasinaTableEntry {
@@ -8,11 +12,35 @@ public class MasinaTableEntry {
     private int numarPunctControl;
     private LocalDate date;
 
-    public MasinaTableEntry(int id, String nume, int numarPunctControl, LocalDate date) {
+    @IgnoreTable
+    Masina masina;
+
+    @IgnoreTable
+    PunctControl punctControl;
+
+    public Masina getMasina() {
+        return masina;
+    }
+
+    public void setMasina(Masina masina) {
+        this.masina = masina;
+    }
+
+    public PunctControl getPunctControl() {
+        return punctControl;
+    }
+
+    public void setPunctControl(PunctControl punctControl) {
+        this.punctControl = punctControl;
+    }
+
+    public MasinaTableEntry(int id, String nume, int numarPunctControl, LocalDate date, Masina masina, PunctControl punctControl) {
         this.id = id;
         this.nume = nume;
         this.numarPunctControl = numarPunctControl;
         this.date = date;
+        this.masina = masina;
+        this.punctControl = punctControl;
     }
 
     public int getId() {

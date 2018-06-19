@@ -55,10 +55,15 @@ public abstract class AbstractClientService implements Runnable{
 
         MasinaPunctControl[] masinaPunctControls2 = gson.fromJson(response.getjSonResponse(), MasinaPunctControl[].class);
         List<MasinaPunctControl> masinaPunctControls = Arrays.asList(masinaPunctControls2);
-        List<MasinaTableEntry> intrebareList = masinaPunctControls.stream().map((c) -> new MasinaTableEntry(c.getMasina().getId(), c.getMasina().getNume(), c.getPunctControl().getNumarControl(), c.getTimpTrecere())).collect(Collectors.toList());
+        List<MasinaTableEntry> intrebareList = masinaPunctControls.stream().map((c) -> new MasinaTableEntry(c.getMasina().getId(), c.getMasina().getNume(), c.getPunctControl().getNumarControl(), c.getTimpTrecere(), c.getMasina(), c.getPunctControl())).collect(Collectors.toList());
         ObservableList<MasinaTableEntry> observableList= FXCollections.observableArrayList(intrebareList);
 
         return observableList;
+    }
+
+    public void handlePassCheckpoint(MasinaPunctControl punctControl) {
+        NetRequest request = new NetRequest(RequestType.PassCheckpoint, gson.toJson(punctControl));
+        NetResponse response = handleRequest(request);
     }
 
 //    public TestCultura handleNewGame(TSUser user){
