@@ -135,7 +135,7 @@ public abstract class AbstractRequestHandler implements Runnable{
             control.setPunctControl(optional.get());
             masinaPunctControlService.save(control);
 
-            List<TSUser> punctControls = masinaPunctControlService.findAll().stream().filter((p) -> p.getPunctControl().getNumarControl() == control.getPunctControl().getNumarControl() + 1 || p.getPunctControl().getNumarControl() == 0).map((t) -> t.getPunctControl().getUser()).collect(Collectors.toList());
+            List<TSUser> punctControls = punctControlService.getAll().stream().filter((p) -> p.getNumarControl() == control.getPunctControl().getNumarControl() + 1 || p.getNumarControl() == 0).map((t) -> t.getUser()).collect(Collectors.toList());
 
             List<String> sentTo = new ArrayList<>();
             for(TSUser crt : punctControls) {
