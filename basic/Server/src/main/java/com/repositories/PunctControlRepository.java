@@ -1,7 +1,7 @@
 package com.repositories;
 
-import com.model.Game;
 import com.model.Intrebare;
+import com.model.PunctControl;
 import com.model.TSUser;
 import com.model.TestCultura;
 import com.util.JdbcUtils;
@@ -17,11 +17,11 @@ import java.util.Properties;
 /**
  * Created by sergiubulzan on 22/06/2017.
  */
-public class GameRepository implements IRepository<Integer, Game> {
+public class PunctControlRepository implements IRepository<Integer, com.model.PunctControl> {
 
     private JdbcUtils dbUtils;
 
-    public GameRepository(Properties properties){
+    public PunctControlRepository(Properties properties){
         dbUtils = new JdbcUtils(properties);
     }
 
@@ -32,18 +32,8 @@ public class GameRepository implements IRepository<Integer, Game> {
     }
 
     @Override
-    public void save(Game entity) {
-        Connection con = dbUtils.getConnection();
-
-        try (PreparedStatement preStmt = con.prepareStatement("insert into Game values (0,?,?,?)")) {
-            preStmt.setInt(1, entity.getUser().getUserId());
-            preStmt.setInt(2, entity.getTestCultura().getId());
-            preStmt.setInt(3,entity.getPunctaj());
-
-            int result = preStmt.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println("Error DB " + ex);
-        }
+    public void save(PunctControl entity) {
+        assert false : "Not implemented";
     }
 
     @Override
@@ -52,34 +42,31 @@ public class GameRepository implements IRepository<Integer, Game> {
     }
 
     @Override
-    public void update(Integer integer, Game entity) {
+    public void update(Integer integer, PunctControl entity) {
         assert false : "Not implemented";
     }
 
     @Override
-    public Game findOne(Integer integer) {
+    public PunctControl findOne(Integer integer) {
         Connection con=dbUtils.getConnection();
 
-        try(PreparedStatement preStmt=con.prepareStatement("select * from Game where id=?")){
+        try(PreparedStatement preStmt=con.prepareStatement("select * from PunctControl where id=?")){
             preStmt.setInt(1,integer);
             try(ResultSet result=preStmt.executeQuery()) {
                 if (result.next()) {
                     int id = result.getInt("id");
                     int idUser = result.getInt("idUser");
-                    int idTest = result.getInt("idTest");
-                    int punctaj = result.getInt("Punctaj");
+                    int numarControl = result.getInt("numarControl");
 
-                    TestHBNRepository testHBNRepository = new TestHBNRepository();
-                    TestCultura testCultura = testHBNRepository.findOne(idTest);
 
                     UserRepo userRepo = new UserRepo(JdbcUtils.getProps());
                     TSUser user = userRepo.findOne(idUser);
 
 
-                    Game game = new Game(id,user,testCultura,punctaj);
+                    PunctControl punctControl = new PunctControl(id, numarControl, user);
 
 
-                    return game;
+                    return punctControl;
                 }
             }
         }catch (SQLException ex){
@@ -89,33 +76,31 @@ public class GameRepository implements IRepository<Integer, Game> {
     }
 
     @Override
-    public List<Game> findAll() {
+    public List<PunctControl> findAll() {
         Connection con=dbUtils.getConnection();
-        List<Game> games =new ArrayList<>();
-        try(PreparedStatement preStmt=con.prepareStatement("select * from Game")) {
+        List<PunctControl> punctControls =new ArrayList<>();
+        try(PreparedStatement preStmt=con.prepareStatement("select * from PunctControl")) {
             try(ResultSet result=preStmt.executeQuery()) {
                 while (result.next()) {
 
                     int id = result.getInt("id");
                     int idUser = result.getInt("idUser");
-                    int idTest = result.getInt("idTest");
-                    int punctaj = result.getInt("Punctaj");
+                    int numarControl = result.getInt("numarControl");
 
-                    TestHBNRepository testHBNRepository = new TestHBNRepository();
-                    TestCultura testCultura = testHBNRepository.findOne(idTest);
 
                     UserRepo userRepo = new UserRepo(JdbcUtils.getProps());
                     TSUser user = userRepo.findOne(idUser);
 
 
-                    Game game = new Game(id,user,testCultura,punctaj);
+                    PunctControl punctControl = new PunctControl(id, numarControl, user);
 
-                    games.add(game);
+
+                    punctControls.add(punctControl);
                 }
             }
         } catch (SQLException e) {
             System.out.println("Error DB "+e);
         }
-        return games;
+        return punctControls;
     }
 }

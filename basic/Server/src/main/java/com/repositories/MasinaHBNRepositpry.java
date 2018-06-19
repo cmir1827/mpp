@@ -1,9 +1,8 @@
 package com.repositories;
 
-import com.model.Game;
+import com.model.Masina;
 import com.model.TestCultura;
 import com.util.HibernateUtil;
-import com.util.JdbcUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -12,14 +11,14 @@ import java.util.List;
 /**
  * Created by sergiubulzan on 22/06/2017.
  */
-public class TestHBNRepository implements IRepository<Integer,TestCultura> {
+public class MasinaHBNRepositpry implements IRepository<Integer,Masina> {
     @Override
     public int size() {
         SessionFactory sessionFactory = HibernateUtil.instance.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Integer count = (Integer) ((Long) session.createQuery("select count(*) from TestCultura").uniqueResult()).intValue();
+        Integer count = (Integer) ((Long) session.createQuery("select count(*) from Masina").uniqueResult()).intValue();
 
         session.getTransaction().commit();
         session.close();
@@ -28,7 +27,7 @@ public class TestHBNRepository implements IRepository<Integer,TestCultura> {
     }
 
     @Override
-    public void save(TestCultura entity) {
+    public void save(Masina entity) {
         SessionFactory sessionFactory = HibernateUtil.instance.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -45,41 +44,41 @@ public class TestHBNRepository implements IRepository<Integer,TestCultura> {
     }
 
     @Override
-    public void update(Integer integer, TestCultura entity) {
+    public void update(Integer integer, Masina entity) {
         assert false : "NOT IMPLEMENTED";
     }
 
     @Override
-    public TestCultura findOne(Integer integer) {
+    public Masina findOne(Integer integer) {
         SessionFactory sessionFactory = HibernateUtil.instance.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List result = session.createQuery("from TestCultura T where T.id = " + integer).list();
+        List result = session.createQuery("from Masina T where T.id = " + integer).list();
 
         session.getTransaction().commit();
         session.close();
 
         if(result.size() > 0){
-            return (TestCultura) result.get(0);
+            return (Masina) result.get(0);
         }else{
             return null;
         }
     }
 
     @Override
-    public List<TestCultura> findAll() {
+    public List<Masina> findAll() {
         System.out.println("before session factory");
         SessionFactory sessionFactory = HibernateUtil.instance.getSessionFactory();
         System.out.println(sessionFactory);
         Session session = sessionFactory.openSession();
         System.out.println(session);
         session.beginTransaction();
-        List result =  session.createQuery( "FROM TestCultura" ).list();
+        List result =  session.createQuery( "FROM Masina" ).list();
         session.getTransaction().commit();
         session.close();
 
         System.out.println(result);
 
-        return  (List<TestCultura>) result;
+        return  (List<Masina>) result;
     }
 }

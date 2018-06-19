@@ -10,6 +10,7 @@ public class PunctControl {
     private Integer numarControl;
     TSUser user;
 
+
     public PunctControl() {
     }
 

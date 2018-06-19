@@ -24,7 +24,7 @@ public class HibernateUtil {
 
         Configuration configuration = new Configuration();
         configuration.configure();
-        configuration.addResource("/testCultura.hbm.xml");
+        configuration.addResource("/masina.xml");
 
         serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 
