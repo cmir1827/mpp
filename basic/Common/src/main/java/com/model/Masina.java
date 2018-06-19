@@ -1,29 +1,26 @@
 package com.model;
 
+import com.util.IgnoreTable;
+
+import java.util.List;
+
 /**
  * Created by sergiubulzan on 22/06/2017.
  */
-public class TestCultura {
-    private Integer id;
+public class Masina {
+    private int id;
     private String nume;
 
-    public TestCultura() {
-    }
+    public Masina(String nume) {
 
-    public TestCultura(String nume) {
         this.nume = nume;
     }
 
-    public TestCultura(Integer id, String nume) {
-        this.id = id;
-        this.nume = nume;
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -37,6 +34,9 @@ public class TestCultura {
 
     @Override
     public String toString() {
-        return nume;
+        return "Masina{" +
+                "id=" + id +
+                ", nume='" + nume + '\'' +
+                '}';
     }
 }
