@@ -115,11 +115,17 @@ public abstract class AbstractRequestHandler implements Runnable{
     }
 
     protected NetResponse handlePassCheckpoint(String punctControlJson) {
-        PunctControl control = gson.fromJson(punctControlJson, PunctControl.class);
+        MasinaPunctControl control = gson.fromJson(punctControlJson, MasinaPunctControl.class);
 
-        punctControlService.save(control);
+        masinaPunctControlService.save(control);
 
-        //Notify others
+        List<TSUser> punctControls = masinaPunctControlService.findAll().stream().filter((p) -> p.getPunctControl().getNumarControl() == control.getPunctControl().getNumarControl() + 1 || p.getPunctControl().getNumarControl() == 0).map((t) -> t.getPunctControl().getUser()).collect(Collectors.toList());
+
+        for(TSUser crt : punctControls) {
+            if (userMap.containsKey(crt)) {
+                sendCustomNotification(userMap[crt], new NetResponse(ResponseType.Notify_new_car, "OK", gson.toJson(control, MasinaPunctControl.class)));
+            }
+        }
 
         return new NetResponse(ResponseType.OK, "ok");
     }

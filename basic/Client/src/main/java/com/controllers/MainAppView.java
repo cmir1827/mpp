@@ -170,4 +170,8 @@ public class MainAppView {
             clientService.handlePassCheckpoint(new MasinaPunctControl(selectedMasina.getMasina(), selectedMasina.getPunctControl(), LocalDate.parse(answerField.getText())));
         }
     }
+
+    public void addNewCar(MasinaPunctControl masinaPunctControl) {
+        this.observableList.add(new MasinaTableEntry(masinaPunctControl.getId(), masinaPunctControl.getMasina().getNume(), masinaPunctControl.getPunctControl().getNumarControl(), masinaPunctControl.getTimpTrecere(), masinaPunctControl.getMasina(), masinaPunctControl.getPunctControl())); 
+    }
 }
