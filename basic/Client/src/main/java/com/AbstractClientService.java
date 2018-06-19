@@ -66,31 +66,6 @@ public abstract class AbstractClientService implements Runnable{
         NetResponse response = handleRequest(request);
     }
 
-//    public TestCultura handleNewGame(TSUser user){
-//        NetRequest request = new NetRequest(RequestType.REQUEST_NEW_GAME, gson.toJson(user));
-//        NetResponse response = handleRequest(request);
-//
-//        if(response.getMessage().contains("Start")){
-//            return gson.fromJson(response.getjSonResponse(), TestCultura.class);
-//        }else{
-//            return null;
-//        }
-//    }
-//
-//    public ObservableList<Game> sendGameOver(Game game) {
-//        NetRequest request  = new NetRequest(RequestType.REQUEST_GAME_OVER, gson.toJson(game));
-//        NetResponse response = handleRequest(request);
-//
-//        if(response.getMessage().contains("OVER")){
-//            Game[] gameArray = gson.fromJson(response.getjSonResponse(),Game[].class);
-//            List<Game> gameList = Arrays.asList(gameArray);
-//            ObservableList<Game> observableList= FXCollections.observableArrayList(gameList);
-//            return observableList;
-//        }else{
-//            return null;
-//        }
-//    }
-
     public abstract NetResponse handleRequest(NetRequest request);
 
     public abstract void run();
@@ -98,19 +73,10 @@ public abstract class AbstractClientService implements Runnable{
     public void notificationRecieved(NetResponse response){
         System.out.println("I call update");
 
-//        if (response.getType() == ResponseType.NOTIFY_GAME_START) {
-//            Platform.runLater(() -> {
-//                mainAppView.initNewGame(gson.fromJson(response.getjSonResponse(), TestCultura.class));
-//            });
-//        }else if(response.getType() == ResponseType.NOTIFY_GAME_OVER){
-//            Platform.runLater(()->{
-//
-//                Game[] gameArray = gson.fromJson(response.getjSonResponse(),Game[].class);
-//                List<Game> gameList = Arrays.asList(gameArray);
-//                ObservableList<Game> observableList= FXCollections.observableArrayList(gameList);
-//
-//                resultsController.setObservableList(observableList);
-//            });
-//        }
+        if (response.getType() == ResponseType.Notify_new_car) {
+            Platform.runLater(() -> {
+                mainAppView.addNewCar(gson.fromJson(response.getjSonResponse(), MasinaPunctControl.class));
+            });
+        }
     }
 }

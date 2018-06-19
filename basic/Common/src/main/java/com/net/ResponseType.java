@@ -5,6 +5,5 @@ package com.net;
  */
 public enum ResponseType {
     OK, ERROR,
-    NOTIFY_GAME_START,
-    NOTIFY_GAME_OVER
+    Notify_new_car
 }
