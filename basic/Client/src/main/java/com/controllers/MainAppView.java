@@ -172,6 +172,6 @@ public class MainAppView {
     }
 
     public void addNewCar(MasinaPunctControl masinaPunctControl) {
-        this.observableList.add(new MasinaTableEntry(masinaPunctControl.getId(), masinaPunctControl.getMasina().getNume(), masinaPunctControl.getPunctControl().getNumarControl(), masinaPunctControl.getTimpTrecere(), masinaPunctControl.getMasina(), masinaPunctControl.getPunctControl())); 
+        this.observableList.add(new MasinaTableEntry(masinaPunctControl.getId(), masinaPunctControl.getMasina().getNume(), masinaPunctControl.getPunctControl().getNumarControl(), masinaPunctControl.getTimpTrecere(), masinaPunctControl.getMasina(), masinaPunctControl.getPunctControl()));
     }
 }

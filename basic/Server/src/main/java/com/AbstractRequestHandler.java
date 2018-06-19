@@ -123,7 +123,7 @@ public abstract class AbstractRequestHandler implements Runnable{
 
         for(TSUser crt : punctControls) {
             if (userMap.containsKey(crt)) {
-                sendCustomNotification(userMap[crt], new NetResponse(ResponseType.Notify_new_car, "OK", gson.toJson(control, MasinaPunctControl.class)));
+                sendCustomNotification(userMap.get(crt), new NetResponse(ResponseType.Notify_new_car, "OK", gson.toJson(control, MasinaPunctControl.class)));
             }
         }
 
