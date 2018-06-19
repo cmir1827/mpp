@@ -2,9 +2,6 @@ package com.model;
 
 import java.util.List;
 
-/**
- * Created by sergiubulzan on 22/06/2017.
- */
 public class RestResponse {
     private TSUser user;
     private int result;

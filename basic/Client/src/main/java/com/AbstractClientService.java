@@ -18,9 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by sergiubulzan on 20/06/2017.
- */
 public abstract class AbstractClientService implements Runnable{
 
     protected MainAppView mainAppView;

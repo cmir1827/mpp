@@ -5,9 +5,6 @@ import com.repositories.UserRepo;
 
 import java.util.List;
 
-/**
- * Created by sergiubulzan on 17/06/2017.
- */
 public class UsersService {
     UserRepo repo;
 

@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * Created by sergiubulzan on 22/06/2017.
- */
 public class MasinaPunctControlRepository implements IRepository<Integer, MasinaPunctControl>{
     private JdbcUtils dbUtils;
 

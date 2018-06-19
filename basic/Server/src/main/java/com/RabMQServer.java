@@ -12,9 +12,6 @@ import com.util.JdbcUtils;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-/**
- * Created by sergiubulzan on 20/06/2017.
- */
 public class RabMQServer implements IServer {
     public static final String RPC_QUEUE_NAME = "ts_rpc_queue";
 

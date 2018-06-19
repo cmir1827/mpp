@@ -9,9 +9,7 @@ import com.util.NetSerialization;
 
 import java.io.IOException;
 
-/**
- * Created by sergiubulzan on 20/06/2017.
- */
+
 public class RabMQRequestHandler extends AbstractRequestHandler{
 
     Channel channel;

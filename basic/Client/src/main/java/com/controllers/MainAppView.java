@@ -19,10 +19,6 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.time.LocalDate;
 
-
-/**
- * Created by sergiubulzan on 20/06/2017.
- */
 public class MainAppView {
 
 

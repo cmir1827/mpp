@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * Created by sergiubulzan on 08/04/2017.
- */
 public class UserRepo implements IRepository<Integer, TSUser> {
     private JdbcUtils dbUtils;
 

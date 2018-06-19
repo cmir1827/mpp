@@ -9,10 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
-/**
- * Created by sergiubulzan on 17/06/2017.
- */
 public class StartClient extends Application {
 
     public static Stage primaryStage;

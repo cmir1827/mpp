@@ -2,9 +2,6 @@ package com.repositories;
 
 import java.util.List;
 
-/**
- * Created by sergiubulzan on 17/06/2017.
- */
 public interface IRepository<ID,T> {
     int size();
     void save(T entity);

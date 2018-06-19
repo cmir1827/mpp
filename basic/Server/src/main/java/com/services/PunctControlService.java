@@ -5,9 +5,6 @@ import com.repositories.PunctControlRepository;
 
 import java.util.List;
 
-/**
- * Created by sergiubulzan on 22/06/2017.
- */
 public class PunctControlService {
 
     PunctControlRepository repository;

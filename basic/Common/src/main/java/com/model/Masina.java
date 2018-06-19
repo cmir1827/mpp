@@ -4,9 +4,6 @@ import com.util.IgnoreTable;
 
 import java.util.List;
 
-/**
- * Created by sergiubulzan on 22/06/2017.
- */
 public class Masina {
     private int id;
     private String nume;

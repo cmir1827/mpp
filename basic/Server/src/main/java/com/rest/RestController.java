@@ -29,9 +29,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-/**
- * Created by sergiubulzan on 21/06/2017.
- */
 @Controller
 public class RestController {
 

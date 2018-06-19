@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-/**
- * Created by sergiubulzan on 22/06/2017.
- */
+
 public class MasinaPunctControlService {
     MasinaPunctControlRepository repository;
     public MasinaPunctControlService(MasinaPunctControlRepository repository){

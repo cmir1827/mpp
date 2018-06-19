@@ -1,8 +1,5 @@
 package com.utils;
 
-/**
- * Created by sergiubulzan on 19/06/2017.
- */
 import com.util.IgnoreTable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

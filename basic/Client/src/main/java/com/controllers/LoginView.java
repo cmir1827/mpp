@@ -16,10 +16,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
-/**
- * Created by sergiubulzan on 19/06/2017.
- */
 public class LoginView {
 
     private AbstractClientService clientService;
