@@ -16,10 +16,7 @@ import com.services.UsersService;
 import com.util.JdbcUtils;
 import jdk.nashorn.internal.scripts.JD;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -93,9 +90,25 @@ public abstract class AbstractRequestHandler implements Runnable{
 
             return new NetResponse(ResponseType.OK, "message", gson.toJson(masinaArray));
         } else {
+            List<MasinaPunctControl> allMasinas = masinaPunctControlService.findAll();
             List<MasinaPunctControl> masinas = masinaPunctControlService.findAll().stream().filter((p) -> p.getPunctControl().getNumarControl() == (punctControl.getNumarControl() - 1)).collect(Collectors.toList());
-            MasinaPunctControl[] masinaArray = new MasinaPunctControl[masinas.size()];
-            masinaArray = masinas.toArray(masinaArray);
+
+            List<MasinaPunctControl> finalList = new ArrayList<>();
+
+            for (MasinaPunctControl masinaPunctControl : masinas) {
+                Comparator<MasinaPunctControl> byPunct = new Comparator<MasinaPunctControl>() {
+                    @Override
+                    public int compare(MasinaPunctControl o1, MasinaPunctControl o2) {
+                        return o1.getPunctControl().getNumarControl().compareTo(o2.getPunctControl().getNumarControl());
+                    }
+                };
+
+                if (allMasinas.stream().filter((pc) -> pc.getMasina().getId() == masinaPunctControl.getMasina().getId()).max(byPunct).get().getId() == masinaPunctControl.getId()) {
+                    finalList.add(masinaPunctControl);
+                }
+            }
+            MasinaPunctControl[] masinaArray = new MasinaPunctControl[finalList.size()];
+            masinaArray = finalList.toArray(masinaArray);
 
             return new NetResponse(ResponseType.OK, "message", gson.toJson(masinaArray));
         }
