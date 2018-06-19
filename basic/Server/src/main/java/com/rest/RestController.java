@@ -1,7 +1,16 @@
 package com.rest;
 
 import com.google.gson.*;
+import com.model.MasinaPunctControl;
 import com.model.RestResponse;
+import com.model.TSUser;
+import com.repositories.MasinaPunctControlRepository;
+import com.repositories.PunctControlRepository;
+import com.repositories.UserRepo;
+import com.services.MasinaPunctControlService;
+import com.services.PunctControlService;
+import com.services.UsersService;
+import com.util.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,6 +23,7 @@ import java.lang.reflect.Type;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -70,26 +80,28 @@ public class RestController {
 
     private static final Logger logger = LoggerFactory.getLogger(RestController.class);
 
-
     //-------------------------------------------
     //DATE SERIALIZATION IF NEEDED
 
 
 
-    @RequestMapping(value = "/rest/games/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/masini/{id}", method = RequestMethod.GET)
     public @ResponseBody
-    RestResponse[] getExcursion(@PathVariable("id") String username) {
+    MasinaPunctControl[] getData(@PathVariable("id") int id) {
 
-//        UsersService service = new UsersService(new UserRepo(JdbcUtils.getProps()));
-//        GamingService gamingService = new GamingService(new GameRepository(JdbcUtils.getProps()));
-//
-//        TSUser user = service.findByUsername(username);
-//
-//        List<RestResponse> restResponses = gamingService.getRestResponse(user);
-//
-//        RestResponse[] restResponsesArray = new RestResponse[restResponses.size()];
-//        restResponsesArray = restResponses.toArray(restResponsesArray);
+        MasinaPunctControlService punctControlService = new MasinaPunctControlService(new MasinaPunctControlRepository(JdbcUtils.getProps()));
 
-        return new RestResponse[1];
+        Comparator<MasinaPunctControl> comparator = new Comparator<MasinaPunctControl>() {
+            @Override
+            public int compare(MasinaPunctControl o1, MasinaPunctControl o2) {
+                return -o1.getPunctControl().getNumarControl().compareTo(o1.getPunctControl().getNumarControl());
+            }
+        };
+        List<MasinaPunctControl> masinaPunctControls = punctControlService.findAll().stream().filter(pc -> pc.getMasina().getId() == id).sorted(comparator).collect(Collectors.toList());
+
+        MasinaPunctControl[] restResponsesArray = new MasinaPunctControl[masinaPunctControls.size()];
+        restResponsesArray = masinaPunctControls.toArray(restResponsesArray);
+
+        return restResponsesArray;
     }
 }
