@@ -1,0 +1,5 @@
+rootProject.name = 'talentShow'
+include 'Server'
+include 'Common'
+include 'Client'
+
