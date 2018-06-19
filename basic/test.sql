@@ -1,53 +1,51 @@
-    Create schema CulturaGenerala;
-    use CulturaGenerala ;
+    Create schema Raliu;
+    use Raliu ;
 
-DROP TABLE IF EXISTS User; 
+DROP TABLE IF EXISTS User;
     Create table if not exists User(
 		id INT auto_increment PRIMARY KEY,
         username NVARCHAR(100) UNIQUE,
         password NVARCHAR(100)
-	); 
-    
-    DROP TABLE IF EXISTS TestCultura; 
-    Create table if not exists TestCultura(
+	);
+
+    DROP TABLE IF EXISTS PunctControl;
+    Create table if not exists PunctControl(
 		id INT auto_increment PRIMARY KEY,
-        nume NVARCHAR(100) 
-	); 
+        numarControl INT,
+        idUser INT references User(id)
+	);
 
-    DROP TABLE IF EXISTS Intrebare; 
-    Create table if not exists Intrebare(
+    DROP TABLE IF EXISTS Masina;
+    Create table if not exists Masina(
 		id INT auto_increment PRIMARY KEY,
-        content NVARCHAR(200),
-        correctAnswer NVARCHAR(200),
-        idTest INT references TestCultura(id)
-	); 
-    
-    
-    DROP TABLE IF EXISTS Game; 
-    Create table if not exists Game(
+        nume NVARCHAR(200)
+	);
+
+
+    DROP TABLE IF EXISTS MasinaPunctControl;
+    Create table if not exists MasinaPunctControl(
 		id INT auto_increment PRIMARY KEY,
-        idUser INT REFERENCES User(id),
-        idTest INT References TestCultura(id) ,
-        Punctaj INT
-	);  
+        idMasina INT REFERENCES Masina(id),
+        idPunctControl INT References PunctControl(id) ,
+        timpTrecere DateTime
+	);
 
-insert into User values(0 ,"user1", "pass"); 
-insert into User values(0 ,"user2", "pass"); 
-insert into User values(0 ,"user3", "pass"); 
-insert into User values(0 ,"user4", "pass"); 
+insert into User values(0 ,"user1", "pass");
+insert into User values(0 ,"user2", "pass");
+insert into User values(0 ,"user3", "pass");
+insert into User values(0 ,"user4", "pass");
 
-insert into TestCultura values(0,"Matematica"); 
-insert into TestCultura values(0,"Geografie"); 
+insert into PunctControl values(0, 0, 1);
+insert into PunctControl values(0, 1, 2);
+insert into PunctControl values(0, 2, 3);
+insert into PunctControl values(0, 3, 4);
 
 
-insert into intrebare values(0,"1+1 = ?", "2", 1) ;
-insert into intrebare values(0,"5+2 = ?", "7", 1) ;
-insert into intrebare values(0,"2*3 = ?", "6", 1) ;
-insert into intrebare values(0,"Capitala Romaniei? ", "Bucuresti", 2) ;
-insert into intrebare values(0,"Capitala Georgiei?", "Tbilisi", 2) ;
-insert into intrebare values(0,"Capitala Frantei?", "Paris", 2) ;
 
-select * from game
+insert into Masina values(0, "Masina1") ;
+insert into Masina values(0, "Masina2") ;
+insert into Masina values(0, "Masina3") ;
+
 
 show variables like "max_connections";
 
