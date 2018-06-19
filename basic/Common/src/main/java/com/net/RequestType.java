@@ -5,5 +5,5 @@ package com.net;
  */
 public enum RequestType {
     SignIn, LogOut,
-    GetMasini,
+    GetMasini
 }

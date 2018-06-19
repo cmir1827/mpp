@@ -86,15 +86,15 @@ public abstract class AbstractRequestHandler implements Runnable{
         if (punctControl.getNumarControl() == 0) {
             //send all cars
 
-            List<Masina> masinas = masinaService.getAll();
+            List<MasinaPunctControl> masinas = masinaPunctControlService.findAll();
 
-            Masina[] masinaArray = new Masina[masinas.size()];
+            MasinaPunctControl[] masinaArray = new MasinaPunctControl[masinas.size()];
             masinaArray = masinas.toArray(masinaArray);
 
             return new NetResponse(ResponseType.OK, "message", gson.toJson(masinaArray));
         } else {
-            List<Masina> masinas = masinaPunctControlService.findAll().stream().filter((p) -> p.getPunctControl().getNumarControl() == (punctControl.getNumarControl() - 1)).map((p) -> p.getMasina()).collect(Collectors.toList());
-            Masina[] masinaArray = new Masina[masinas.size()];
+            List<MasinaPunctControl> masinas = masinaPunctControlService.findAll().stream().filter((p) -> p.getPunctControl().getNumarControl() == (punctControl.getNumarControl() - 1)).collect(Collectors.toList());
+            MasinaPunctControl[] masinaArray = new MasinaPunctControl[masinas.size()];
             masinaArray = masinas.toArray(masinaArray);
 
             return new NetResponse(ResponseType.OK, "message", gson.toJson(masinaArray));

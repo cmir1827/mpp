@@ -13,6 +13,7 @@ public class MasinaPunctControl {
     private PunctControl punctControl;
     private LocalDate timpTrecere;
 
+
     public LocalDate getTimpTrecere() {
         return timpTrecere;
     }

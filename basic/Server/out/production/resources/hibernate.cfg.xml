@@ -7,12 +7,12 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">aezakmi</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/CulturaGenerala?useSSL=false</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/Raliu?useSSL=false</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="show_sql">true</property>
         <property name="connection.pool_size">1</property>
 
-        <mapping resource="/testCultura.hbm.xml"></mapping>
+        <mapping resource="/masina.hbm.xml"></mapping>
 
 
     </session-factory>

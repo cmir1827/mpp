@@ -3,7 +3,6 @@ import com.AbstractClientService;
 import com.StartClient;
 import com.exceptions.SignInException;
 import com.model.TSUser;
-import com.model.TestCultura;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -66,6 +65,7 @@ public class LoginView {
             root = (Parent)fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
 
 
@@ -74,7 +74,6 @@ public class LoginView {
 
 
         controller.setLoggedInUser(loggedInUser);
-        controller.displayStartButton();
         clientService.setMainClientView(controller);
 
 

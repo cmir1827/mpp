@@ -2,12 +2,6 @@ package com.rest;
 
 import com.google.gson.*;
 import com.model.RestResponse;
-import com.model.TSUser;
-import com.repositories.GameRepository;
-import com.repositories.UserRepo;
-import com.services.GamingService;
-import com.services.UsersService;
-import com.util.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -86,16 +80,16 @@ public class RestController {
     public @ResponseBody
     RestResponse[] getExcursion(@PathVariable("id") String username) {
 
-        UsersService service = new UsersService(new UserRepo(JdbcUtils.getProps()));
-        GamingService gamingService = new GamingService(new GameRepository(JdbcUtils.getProps()));
+//        UsersService service = new UsersService(new UserRepo(JdbcUtils.getProps()));
+//        GamingService gamingService = new GamingService(new GameRepository(JdbcUtils.getProps()));
+//
+//        TSUser user = service.findByUsername(username);
+//
+//        List<RestResponse> restResponses = gamingService.getRestResponse(user);
+//
+//        RestResponse[] restResponsesArray = new RestResponse[restResponses.size()];
+//        restResponsesArray = restResponses.toArray(restResponsesArray);
 
-        TSUser user = service.findByUsername(username);
-
-        List<RestResponse> restResponses = gamingService.getRestResponse(user);
-
-        RestResponse[] restResponsesArray = new RestResponse[restResponses.size()];
-        restResponsesArray = restResponses.toArray(restResponsesArray);
-
-        return restResponsesArray;
+        return new RestResponse[1];
     }
 }
