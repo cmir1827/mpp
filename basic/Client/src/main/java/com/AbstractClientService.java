@@ -61,9 +61,15 @@ public abstract class AbstractClientService implements Runnable{
         return observableList;
     }
 
-    public void handlePassCheckpoint(MasinaPunctControl punctControl) {
+    public boolean handlePassCheckpoint(MasinaPunctControl punctControl) {
         NetRequest request = new NetRequest(RequestType.PassCheckpoint, gson.toJson(punctControl));
         NetResponse response = handleRequest(request);
+
+        if (response.getType() == ResponseType.OK) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public abstract NetResponse handleRequest(NetRequest request);

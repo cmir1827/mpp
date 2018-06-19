@@ -164,9 +164,10 @@ public class MainAppView {
     }
 
     @FXML void inregistreazaIntrebarePressed(){
-        if(selectedMasina != null && answerField.getText().length() > 0){
+        if(selectedMasina != null && answerField.getText().length() > 0 && !loggedInUser.getUsername().equals("user1")){
             observableList.remove(selectedMasina);
             tableView.refresh();
+
             clientService.handlePassCheckpoint(new MasinaPunctControl(selectedMasina.getMasina(), selectedMasina.getPunctControl(), LocalDate.parse(answerField.getText())));
         }
     }
