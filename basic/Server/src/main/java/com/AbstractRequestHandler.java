@@ -121,9 +121,13 @@ public abstract class AbstractRequestHandler implements Runnable{
 
         List<TSUser> punctControls = masinaPunctControlService.findAll().stream().filter((p) -> p.getPunctControl().getNumarControl() == control.getPunctControl().getNumarControl() + 1 || p.getPunctControl().getNumarControl() == 0).map((t) -> t.getPunctControl().getUser()).collect(Collectors.toList());
 
+
         for(TSUser crt : punctControls) {
-            if (userMap.containsKey(crt)) {
-                sendCustomNotification(userMap.get(crt), new NetResponse(ResponseType.Notify_new_car, "OK", gson.toJson(control, MasinaPunctControl.class)));
+            Optional<TSUser> foundUser = userMap.keySet().stream().filter(p -> p.getUsername().equals(crt.getUsername())).findFirst();
+            if (foundUser.isPresent()) {
+                if (userMap.containsKey(foundUser)) {
+                    sendCustomNotification(userMap.get(foundUser), new NetResponse(ResponseType.Notify_new_car, "OK", gson.toJson(control, MasinaPunctControl.class)));
+                }
             }
         }
 
