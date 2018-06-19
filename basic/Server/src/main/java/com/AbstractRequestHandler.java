@@ -140,7 +140,7 @@ public abstract class AbstractRequestHandler implements Runnable{
             for(TSUser crt : punctControls) {
                 Optional<TSUser> foundUser = userMap.keySet().stream().filter(p -> p.getUsername().equals(crt.getUsername())).findFirst();
                 if (foundUser.isPresent()) {
-                    if (userMap.containsKey(foundUser)) {
+                    if (userMap.containsKey(foundUser.get())) {
                         sendCustomNotification(userMap.get(foundUser), new NetResponse(ResponseType.Notify_new_car, "OK", gson.toJson(control, MasinaPunctControl.class)));
                     }
                 }
