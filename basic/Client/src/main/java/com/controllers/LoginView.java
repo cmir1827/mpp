@@ -75,7 +75,7 @@ public class LoginView {
 
         controller.setLoggedInUser(loggedInUser);
         clientService.setMainClientView(controller);
-
+        controller.setupView();
 
         Scene scene = new Scene(root,800,500);
 

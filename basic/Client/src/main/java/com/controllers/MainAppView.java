@@ -134,7 +134,6 @@ public class MainAppView {
 
 
     @FXML private void initialize(){
-        setupView();
     }
 
     public void setupView(){

@@ -53,8 +53,9 @@ public abstract class AbstractClientService implements Runnable{
         NetResponse response = handleRequest(request);
 
 
-        MasinaPunctControl[] masinaPunctControls = gson.fromJson(response.getjSonResponse(), MasinaPunctControl[].class);
-        List<MasinaTableEntry> intrebareList = Arrays.asList(masinaPunctControls).stream().map((c) -> new MasinaTableEntry(c.getMasina().getId(), c.getMasina().getNume(), c.getPunctControl().getNumarControl(), c.getTimpTrecere())).collect(Collectors.toList());
+        MasinaPunctControl[] masinaPunctControls2 = gson.fromJson(response.getjSonResponse(), MasinaPunctControl[].class);
+        List<MasinaPunctControl> masinaPunctControls = Arrays.asList(masinaPunctControls2);
+        List<MasinaTableEntry> intrebareList = masinaPunctControls.stream().map((c) -> new MasinaTableEntry(c.getMasina().getId(), c.getMasina().getNume(), c.getPunctControl().getNumarControl(), c.getTimpTrecere())).collect(Collectors.toList());
         ObservableList<MasinaTableEntry> observableList= FXCollections.observableArrayList(intrebareList);
 
         return observableList;

@@ -11,6 +11,7 @@ public class Masina {
     private int id;
     private String nume;
 
+    public Masina() {}
     public Masina(String nume) {
 
         this.nume = nume;
